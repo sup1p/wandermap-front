@@ -1,6 +1,8 @@
 # WanderMap Frontend
 website: https://wandermap-front-phi.vercel.app/
 
+backend repo: https://github.com/sup1p/wandermap
+
 ## PROJECT OVERVIEW
 WanderMap frontend is a responsive and interactive web interface that allows users to manage and visualize their trips on a map. Users can view trips chronologically, upload photos, manage profile visibility, and explore shared trips using a unique link system. The design follows a minimalistic, nature-inspired style to enhance the travel experience.
 Also in the map users can see their trips, and see preview of the trip's photo directly in the map. 
