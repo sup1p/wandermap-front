@@ -67,7 +67,9 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
           <Button variant="ghost" size="icon" onClick={onClose} className="mr-2 text-white hover:bg-[#4a5a4a]">
             <X className="h-5 w-5" />
           </Button>
-          <h2 className="text-xl font-semibold">{trip.place}</h2>
+          <h2 className="text-xl font-semibold break-words max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md">
+            {trip.place}
+          </h2>
         </div>
         {!readonly && (
           <div className="flex space-x-1">
@@ -89,7 +91,7 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
 
         <div className="mb-6">
           <div className="text-gray-300 mb-1">Notes</div>
-          <div className="whitespace-pre-wrap">{trip.note || "No notes added"}</div>
+          <div className="whitespace-pre-wrap break-words">{trip.note || "No notes added"}</div>
         </div>
 
         <div className="mb-4">

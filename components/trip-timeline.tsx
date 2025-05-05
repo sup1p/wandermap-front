@@ -55,7 +55,7 @@ export default function TripTimeline({ trips, onTripSelect, onAddClick, readonly
                     <div className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full z-10"></div>
                   </div>
                   <div className="ml-auto w-1/2 p-3 bg-[#4a5a4a] rounded-lg cursor-pointer hover:bg-[#5a6a5a] transition-colors">
-                    <div className="font-medium">{trip.place}</div>
+                    <div className="font-medium break-words">{trip.place}</div>
                     <div className="text-sm text-gray-300">{formatDate(trip.date)}</div>
                   </div>
                 </div>

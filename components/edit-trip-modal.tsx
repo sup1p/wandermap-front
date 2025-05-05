@@ -17,10 +17,16 @@ interface EditTripModalProps {
   trip: Trip
 }
 
+interface LocationSuggestion {
+  label: string;
+  lat?: number;
+  long?: number;
+}
+
 export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTripModalProps) {
   const [formData, setFormData] = useState<Trip>({ ...trip })
   const [placeQuery, setPlaceQuery] = useState(trip.place)
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const debouncedQuery = useDebounce(placeQuery, 300)
@@ -41,7 +47,7 @@ export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTri
       try {
         const token = localStorage.getItem("accessToken")
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/autocomplete/?q=${encodeURIComponent(debouncedQuery)}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/autocomplete/lat_long/?q=${encodeURIComponent(debouncedQuery)}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -51,7 +57,11 @@ export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTri
 
         if (response.ok) {
           const data = await response.json()
-          setSuggestions(data)
+          setSuggestions(data.map((item: { label: string; lat: string; long: string }) => ({
+            label: item.label,
+            lat: parseFloat(item.lat),
+            long: parseFloat(item.long)
+          })))
         }
       } catch (error) {
         console.error("Error fetching suggestions:", error)
@@ -72,9 +82,16 @@ export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTri
     }
   }
 
-  const handleSelectSuggestion = (suggestion: string) => {
-    setFormData((prev) => ({ ...prev, place: suggestion }))
-    setPlaceQuery(suggestion)
+  const handleSelectSuggestion = (suggestion: LocationSuggestion) => {
+    setFormData(prev => ({
+      ...prev,
+      place: suggestion.label,
+      ...(suggestion.lat && suggestion.long ? {
+        latitude: suggestion.lat,
+        longitude: suggestion.long
+      } : {})
+    }))
+    setPlaceQuery(suggestion.label)
     setSuggestions([])
   }
 
@@ -121,7 +138,7 @@ export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTri
                     className="px-4 py-2 hover:bg-[#5a6a5a] cursor-pointer text-white"
                     onClick={() => handleSelectSuggestion(suggestion)}
                   >
-                    {suggestion}
+                    {suggestion.label}
                   </div>
                 ))}
               </div>
@@ -143,7 +160,7 @@ export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTri
             />
           </div>
 
-          <div>
+          <div className="break-words">
             <label htmlFor="note" className="block text-sm text-gray-300 mb-1">
               Note
             </label>
@@ -152,7 +169,7 @@ export default function EditTripModal({ isOpen, onClose, onSave, trip }: EditTri
               name="note"
               value={formData.note}
               onChange={handleChange}
-              className="bg-[#4a5a4a] border-[#5a6a5a] text-white min-h-[100px]"
+              className="bg-[#4a5a4a] border-[#5a6a5a] text-white min-h-[100px] break-all whitespace-pre-wrap w-full overflow-x-hidden"
             />
           </div>
 
