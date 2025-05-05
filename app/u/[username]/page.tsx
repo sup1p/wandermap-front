@@ -108,6 +108,7 @@ function PublicUserPageContent({ username }: { username: string }) {
             onDelete={() => {}}
             onUploadPhoto={() => {}}
             onDeletePhoto={() => {}}
+            readonly={true}
           />
         ) : (
           <TripTimeline trips={trips} onTripSelect={setSelectedTrip} onAddClick={() => {}} readonly={true} />

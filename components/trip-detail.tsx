@@ -24,6 +24,8 @@ interface TripDetailProps {
 export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPhoto, onDeletePhoto, readonly }: TripDetailProps) {
   const { toast } = useToast()
   const [isUploading, setIsUploading] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -120,20 +122,23 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
                 return (
                   <div key={photo.id || index} className="relative group">
                     <Image
-                      src={validUrl} // Ensure a valid URL or fallback is used
+                      src={validUrl}
                       alt={`Photo of ${trip.place}`}
                       width={150}
                       height={150}
-                      className="w-full h-auto rounded-md object-cover aspect-square"
+                      className="w-full h-auto rounded-md object-cover aspect-square cursor-pointer"
+                      onClick={() => setSelectedImage(validUrl)}
                     />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute top-1 right-1 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
-                      onClick={() => onDeletePhoto(photo.id.toString())} // Use `photo.id` for deletion
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
+                    {!readonly && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-1 right-1 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
+                        onClick={() => onDeletePhoto(photo.id.toString())}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    )}
                   </div>
                 )
               })}
@@ -143,6 +148,25 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
           )}
         </div>
       </div>
+      {selectedImage && (
+          <div className="fixed inset-0 bg-black/80 z-[1000] flex items-center justify-center">
+            <div className="relative bg-black p-4 rounded-lg shadow-xl max-w-[90%] max-h-[90%]">
+              <button
+                className="absolute top-2 right-2 text-white hover:text-gray-300"
+                onClick={() => setSelectedImage(null)}
+              >
+                <X className="h-6 w-6" />
+              </button>
+              <Image
+                src={selectedImage}
+                alt="Enlarged photo"
+                width={800}
+                height={600}
+                className="max-w-full max-h-[80vh] object-contain rounded"
+              />
+            </div>
+          </div>
+        )}
     </div>
   )
 }
