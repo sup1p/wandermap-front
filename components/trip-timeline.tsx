@@ -27,16 +27,26 @@ export default function TripTimeline({ trips, onTripSelect, onAddClick, readonly
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 border-b border-[#4a5a4a]">
-        <h2 className="text-xl font-semibold text-center">Your Journey</h2>
+      <div className="p-4 border-b border-[#4a5a4a] flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Your Journey</h2>
+        {!readonly && (
+          <Button
+            onClick={handleAddClick}
+            className="bg-[#4a5a4a] hover:bg-[#5a6a5a] text-white"
+            size="sm"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Trip
+          </Button>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#4a5a4a] transform -translate-x-1/2"></div>
+          <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-[#4a5a4a]" />
 
-          {/* Timeline items */}
+          {/* Trip items */}
           <div className="space-y-4">
             {trips && trips.length > 0 ? (
               trips.map((trip) => (
@@ -56,20 +66,6 @@ export default function TripTimeline({ trips, onTripSelect, onAddClick, readonly
           </div>
         </div>
       </div>
-
-      {!readonly && (
-        <div className="p-4 border-t border-[#4a5a4a]">
-          <Button
-            onClick={handleAddClick}
-            variant="outline"
-            className="w-full border-[#4a5a4a] hover:bg-[#4a5a4a]"
-            type="button"
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            Add Trip
-          </Button>
-        </div>
-      )}
     </div>
   )
 }

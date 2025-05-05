@@ -70,7 +70,7 @@
   background-position: center;
 }
 
-/* Add these styles to ensure modals and buttons are properly visible */
+
 .fixed {
   z-index: 50;
 }
