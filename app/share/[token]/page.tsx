@@ -13,7 +13,15 @@ const MapComponent = dynamic(() => import("@/components/map-component"), {
   loading: () => <div className="h-screen w-full bg-gray-200">Loading map...</div>,
 })
 
-export default function SharePage({ params }: { params: { token: string } }) {
+import { type Metadata } from "next";
+
+interface SharePageProps {
+  params: {
+    token: string;
+  };
+}
+
+export default function SharePage({ params }: SharePageProps) {
   const { toast } = useToast()
   const [trips, setTrips] = useState<Trip[]>([])
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null)
@@ -80,6 +88,7 @@ export default function SharePage({ params }: { params: { token: string } }) {
             onDelete={() => {}}
             onUploadPhoto={() => {}}
             onDeletePhoto={() => {}}
+            readonly={true}
           />
         ) : (
           <TripTimeline trips={trips} onTripSelect={setSelectedTrip} onAddClick={() => {}} readonly={true}/>

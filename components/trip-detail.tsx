@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
 import { Edit, Trash, Upload, X } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
+import { read } from "fs";
 
 interface TripDetailProps {
   trip: Trip
@@ -17,9 +18,10 @@ interface TripDetailProps {
   onDelete: () => void
   onUploadPhoto: (file: File) => void
   onDeletePhoto: (photoId: string) => void
+  readonly?: boolean
 }
 
-export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPhoto, onDeletePhoto }: TripDetailProps) {
+export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPhoto, onDeletePhoto, readonly }: TripDetailProps) {
   const { toast } = useToast()
   const [isUploading, setIsUploading] = useState(false)
 
@@ -65,14 +67,16 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
           </Button>
           <h2 className="text-xl font-semibold">{trip.place}</h2>
         </div>
-        <div className="flex space-x-1">
-          <Button variant="ghost" size="icon" onClick={onEdit} className="text-white hover:bg-[#4a5a4a]">
-            <Edit className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon" onClick={onDelete} className="text-white hover:bg-[#4a5a4a]">
-            <Trash className="h-4 w-4" />
-          </Button>
-        </div>
+        {!readonly && (
+          <div className="flex space-x-1">
+            <Button variant="ghost" size="icon" onClick={onEdit} className="text-white hover:bg-[#4a5a4a]">
+              <Edit className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={onDelete} className="text-white hover:bg-[#4a5a4a]">
+              <Trash className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
@@ -97,10 +101,12 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
                 onChange={handleFileChange}
                 disabled={isUploading}
               />
-              <div className="flex items-center text-sm text-gray-300 hover:text-white">
-                <Upload className="h-4 w-4 mr-1" />
-                {isUploading ? "Uploading..." : "Upload"}
-              </div>
+              {!readonly && (
+                <div className="flex items-center text-sm text-gray-300 hover:text-white">
+                  <Upload className="h-4 w-4 mr-1" />
+                  {isUploading ? "Uploading..." : "Upload"}
+                </div>
+              )}
             </label>
           </div>
 
