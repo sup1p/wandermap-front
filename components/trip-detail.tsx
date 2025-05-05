@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
 import { Edit, Trash, Upload, X } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
-import { read } from "fs";
+import { createPortal } from "react-dom";
 
 interface TripDetailProps {
   trip: Trip
@@ -148,25 +148,26 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
           )}
         </div>
       </div>
-      {selectedImage && (
-          <div className="fixed inset-0 bg-black/80 z-[1000] flex items-center justify-center">
-            <div className="relative bg-black p-4 rounded-lg shadow-xl max-w-[90%] max-h-[90%]">
-              <button
-                className="absolute top-2 right-2 text-white hover:text-gray-300"
-                onClick={() => setSelectedImage(null)}
-              >
-                <X className="h-6 w-6" />
-              </button>
-              <Image
-                src={selectedImage}
-                alt="Enlarged photo"
-                width={800}
-                height={600}
-                className="max-w-full max-h-[80vh] object-contain rounded"
-              />
-            </div>
+      {selectedImage && createPortal(
+        <div className="fixed inset-0 bg-black/80 z-[99999] flex items-center justify-center">
+          <div className="relative bg-black p-4 rounded-lg shadow-xl max-w-[90%] max-h-[90%]">
+            <button
+              className="absolute top-2 right-2 text-white hover:text-gray-300"
+              onClick={() => setSelectedImage(null)}
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <Image
+              src={selectedImage}
+              alt="Enlarged photo"
+              width={800}
+              height={600}
+              className="max-w-full max-h-[80vh] object-contain rounded"
+            />
           </div>
-        )}
+        </div>,
+        document.body
+      )}
     </div>
   )
 }
