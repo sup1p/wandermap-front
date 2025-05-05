@@ -62,15 +62,13 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
 
   return (
     <div className="flex flex-col h-screen max-h-screen overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-[#4a5a4a] flex-shrink-0">
-        <div className="flex items-center">
-          <Button variant="ghost" size="icon" onClick={onClose} className="mr-2 text-white hover:bg-[#4a5a4a]">
-            <X className="h-5 w-5" />
-          </Button>
-          <h2 className="text-xl font-semibold break-words max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md">
-            {trip.place}
-          </h2>
-        </div>
+      <div className="flex justify-between items-start p-4 border-b border-[#4a5a4a] flex-shrink-0">
+      <div className="flex flex-wrap items-center gap-2 max-w-[70%]">
+        <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-[#4a5a4a]">
+          <X className="h-5 w-5" />
+        </Button>
+        <h2 className="text-xl font-semibold break-words">{trip.place}</h2>
+      </div>
         {!readonly && (
           <div className="flex space-x-1">
             <Button variant="ghost" size="icon" onClick={onEdit} className="text-white hover:bg-[#4a5a4a]">
