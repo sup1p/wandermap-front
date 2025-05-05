@@ -35,12 +35,14 @@ npm run dev
 - **Design**: Created design in figma, to have a proper understanding of what i need to do.
 - **Authentication Flow**: JWT-based token system with localStorage, including automatic refresh handling on API failure.
 - **Routing**: Uses Next.js App Router with `use client` directive to ensure client-side interactivity.
-- **Interactive Map**: Leaflet-based map is loaded dynamically using `next/dynamic` to prevent SSR issues.
+- **Interactive Map**: Leaflet-based map is loaded dynamically using `next/dynamic` to prevent SSR issues, and when mouse is over of trip point, it shows preview image..
 - **Timeline**: Trips are visualized from oldest to newest, with detailed modals for viewing, adding, and editing.
 - **UI Framework**: Tailwind CSS is used for all styling, providing a clean and fast development experience.
 - **State Management**: Lightweight use of React’s built-in `useState`, `useEffect`, and `useCallback`.
-- **Media Uploads**: Supports drag-and-drop photo uploads per trip, integrated with the backend's Supabase S3.
+- **Media Uploads**: Supports upload from device photo uploads per trip, integrated with the backend's Supabase S3.
 - **Error Handling**: Toaster-based feedback system using custom hook `useToast`.
+- **Sharing Trips**: Created unique web interface for showing data of the someone's user without any additional buttons.
+- **Hide and show**: Added button to show and hide sidebar, for showing map in a full screen.
 
 ---
 
