@@ -6,9 +6,6 @@ export default function Home() {
   return (
     <AuthBackground>
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white drop-shadow-md mb-6">WANDERMAP</h1>
-        </div>
         <div className="bg-[#3a4a3a]/80 p-10 rounded-md w-full max-w-md flex flex-col gap-4">
           <h2 className="text-xl font-semibold text-center text-white mb-4">Welcome!</h2>
           <Link href="/signup" className="w-full">

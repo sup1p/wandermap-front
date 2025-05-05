@@ -64,9 +64,6 @@ export default function Login() {
   return (
     <AuthBackground>
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white drop-shadow-md">WANDERMAP</h1>
-        </div>
         <div className="bg-[#3a4a3a]/80 p-10 rounded-md w-full max-w-md">
           <h2 className="text-xl font-semibold text-center text-white mb-6">Log in</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
