@@ -31,6 +31,7 @@ export default function MapPage() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -356,29 +357,31 @@ export default function MapPage() {
           onTripSelect={setSelectedTrip}
         />
       </div>
-
-      <div className="w-96 bg-[#3a4a3a] text-white flex flex-col h-screen">
-        <MapHeader
-          onSettingsClick={() => {
-            console.log("Settings button clicked")
-            setIsSettingsOpen(true)
-            console.log("isSettingsOpen set to:", true)
-          }}
-        />
-
-        {selectedTrip ? (
-          <TripDetail
-            trip={selectedTrip}
-            onClose={() => setSelectedTrip(null)}
-            onEdit={() => setIsEditModalOpen(true)}
-            onDelete={() => handleDeleteTrip(selectedTrip.id)}
-            onUploadPhoto={(file) => handleUploadPhoto(selectedTrip.id, file)}
-            onDeletePhoto={(photoId) => handleDeletePhoto(selectedTrip.id, photoId)}
+      {isSidebarVisible && (
+        <div className="w-96 bg-[#3a4a3a] text-white flex flex-col h-screen">
+          <MapHeader
+            onSettingsClick={() => {
+              console.log("Settings button clicked")
+              setIsSettingsOpen(true)
+            }}
+            isSidebarVisible={isSidebarVisible}
+            onToggleSidebar={() => setIsSidebarVisible(!isSidebarVisible)}
           />
-        ) : (
-          <TripTimeline trips={trips} onTripSelect={setSelectedTrip} onAddClick={handleOpenAddModal} />
-        )}
-      </div>
+
+          {selectedTrip ? (
+            <TripDetail
+              trip={selectedTrip}
+              onClose={() => setSelectedTrip(null)}
+              onEdit={() => setIsEditModalOpen(true)}
+              onDelete={() => handleDeleteTrip(selectedTrip.id)}
+              onUploadPhoto={(file) => handleUploadPhoto(selectedTrip.id, file)}
+              onDeletePhoto={(photoId) => handleDeletePhoto(selectedTrip.id, photoId)}
+            />
+          ) : (
+            <TripTimeline trips={trips} onTripSelect={setSelectedTrip} onAddClick={handleOpenAddModal} />
+          )}
+        </div>
+      )}
 
       {isAddModalOpen && (
         <AddTripModal

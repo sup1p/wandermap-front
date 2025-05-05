@@ -16,12 +16,12 @@ export default function MapHeader({ onSettingsClick, isSidebarVisible, onToggleS
       <div className="flex items-center gap-2">
         <button
           onClick={onToggleSidebar}
-          className="text-sm bg-green text-white px-2 py-1 rounded hover:bg-green-200"
+          className="text-sm bg-green-600 text-white px-2 py-1 rounded hover:bg-green-500"
         >
           {isSidebarVisible ? "Hide" : "Show"}
         </button>
         <button onClick={onSettingsClick} className="text-white">
-          ⚙️
+          <Settings className="w-5 h-5" />
         </button>
       </div>
     </div>
