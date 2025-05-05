@@ -1,0 +1,32 @@
+# dependencies
+/node_modules
+
+# next.js build output
+/.next/
+/out/
+/build
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*        # 👈 исправлено .pnpm-debug.log* → pnpm-debug.log*
+
+# env files
+.env
+.env.*.local
+.env.local
+
+# deployment
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# editor settings (optional)
+.vscode/
