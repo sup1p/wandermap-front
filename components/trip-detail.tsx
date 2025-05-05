@@ -61,8 +61,8 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between p-4 border-b border-[#4a5a4a]">
+    <div className="flex flex-col h-screen max-h-screen overflow-hidden">
+      <div className="flex items-center justify-between p-4 border-b border-[#4a5a4a] flex-shrink-0">
         <div className="flex items-center">
           <Button variant="ghost" size="icon" onClick={onClose} className="mr-2 text-white hover:bg-[#4a5a4a]">
             <X className="h-5 w-5" />
@@ -81,7 +81,7 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 min-h-0">
         <div className="mb-4">
           <div className="text-gray-300 mb-1">Date</div>
           <div>{formatDate(trip.date)}</div>
@@ -92,7 +92,7 @@ export default function TripDetail({ trip, onClose, onEdit, onDelete, onUploadPh
           <div className="whitespace-pre-wrap">{trip.note || "No notes added"}</div>
         </div>
 
-        <div>
+        <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
             <div className="text-gray-300">Photos</div>
             <label className="cursor-pointer">

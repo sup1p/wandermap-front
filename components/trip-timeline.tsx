@@ -26,8 +26,8 @@ export default function TripTimeline({ trips, onTripSelect, onAddClick, readonly
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="p-4 border-b border-[#4a5a4a] flex items-center justify-between">
+    <div className="flex flex-col h-screen max-h-screen overflow-hidden">
+      <div className="flex-none p-4 border-b border-[#4a5a4a] flex items-center justify-between">
         <h2 className="text-xl font-semibold">Your Journey</h2>
         {!readonly && (
           <Button
@@ -41,8 +41,8 @@ export default function TripTimeline({ trips, onTripSelect, onAddClick, readonly
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="relative">
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <div className="relative p-4">
           {/* Timeline line */}
           <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-[#4a5a4a]" />
 
