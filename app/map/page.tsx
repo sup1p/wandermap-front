@@ -31,6 +31,7 @@ export default function MapPage() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -347,8 +348,8 @@ export default function MapPage() {
 
   // Также добавим отладочные логи для кнопки настроек
   return (
-    <div className="flex h-screen">
-      <div className="flex-1 relative" style={{ zIndex: 1 }}>
+    <div className="flex h-screen relative">
+      <div className="flex-1 relative z-0">
         <MapComponent
           trips={trips}
           onMapClick={handleMapClick}
@@ -356,44 +357,53 @@ export default function MapPage() {
           onTripSelect={setSelectedTrip}
         />
       </div>
-
-      <div className="w-96 bg-[#3a4a3a] text-white flex flex-col h-screen">
-        <MapHeader
-          onSettingsClick={() => {
-            console.log("Settings button clicked")
-            setIsSettingsOpen(true)
-            console.log("isSettingsOpen set to:", true)
-          }}
-        />
-
-        {selectedTrip ? (
-          <TripDetail
-            trip={selectedTrip}
-            onClose={() => setSelectedTrip(null)}
-            onEdit={() => setIsEditModalOpen(true)}
-            onDelete={() => handleDeleteTrip(selectedTrip.id)}
-            onUploadPhoto={(file) => handleUploadPhoto(selectedTrip.id, file)}
-            onDeletePhoto={(photoId) => handleDeletePhoto(selectedTrip.id, photoId)}
+  
+      {/* SHOW BUTTON (on map) */}
+      {!isSidebarVisible && (
+        <button
+          onClick={() => setIsSidebarVisible(true)}
+          className="absolute top-4 right-4 z-[1000] bg-white text-black px-2 py-1 rounded shadow"
+        >
+          Show →
+        </button>
+      )}
+  
+      {/* SIDEBAR */}
+      {isSidebarVisible && (
+        <div className="w-96 bg-[#3a4a3a] text-white flex flex-col h-screen z-10">
+          <MapHeader
+            onSettingsClick={() => setIsSettingsOpen(true)}
+            isSidebarVisible={isSidebarVisible}
+            onToggleSidebar={() => setIsSidebarVisible(false)}
           />
-        ) : (
-          <TripTimeline trips={trips} onTripSelect={setSelectedTrip} onAddClick={handleOpenAddModal} />
-        )}
-      </div>
-
+  
+          {selectedTrip ? (
+            <TripDetail
+              trip={selectedTrip}
+              onClose={() => setSelectedTrip(null)}
+              onEdit={() => setIsEditModalOpen(true)}
+              onDelete={() => handleDeleteTrip(selectedTrip.id)}
+              onUploadPhoto={(file) => handleUploadPhoto(selectedTrip.id, file)}
+              onDeletePhoto={(photoId) => handleDeletePhoto(selectedTrip.id, photoId)}
+            />
+          ) : (
+            <TripTimeline trips={trips} onTripSelect={setSelectedTrip} onAddClick={handleOpenAddModal} />
+          )}
+        </div>
+      )}
+      {/* MODALS */}
       {isAddModalOpen && (
         <AddTripModal
           isOpen={isAddModalOpen}
           onClose={() => {
-            console.log("Closing add modal")
             setIsAddModalOpen(false)
-            setSelectedLocation(null) // Reset selected location when closing
+            setSelectedLocation(null)
           }}
           onAdd={handleAddTrip}
           initialLocation={selectedLocation}
           openedFrom={selectedLocation ? 'map' : 'sidebar'}
         />
       )}
-
       {isEditModalOpen && selectedTrip && (
         <EditTripModal
           isOpen={isEditModalOpen}
@@ -402,16 +412,12 @@ export default function MapPage() {
           trip={selectedTrip}
         />
       )}
-
       {isSettingsOpen && (
         <SettingsPanel
           isOpen={isSettingsOpen}
-          onClose={() => {
-            console.log("Closing settings panel")
-            setIsSettingsOpen(false)
-          }}
+          onClose={() => setIsSettingsOpen(false)}
           onLogout={handleLogout}
-          onChangePublicity={handleChangePublicity} // Pass the handler to SettingsPanel
+          onChangePublicity={handleChangePublicity}
         />
       )}
     </div>
