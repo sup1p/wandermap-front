@@ -23,12 +23,12 @@ NEXT_PUBLIC_API_URL=https://your-backend-api-url.com
 
 ### 📦 Install Dependencies
 ```bash
-npm install
+pnpm install
 ```
 
 ### ▶️ Start Development Server
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ---
@@ -37,10 +37,10 @@ npm run dev
 - **Design**: Created design in figma, to have a proper understanding of what i need to do.
 - **Authentication Flow**: JWT-based token system with localStorage, including automatic refresh handling on API failure.
 - **Routing**: Uses Next.js App Router with `use client` directive to ensure client-side interactivity.
-- **Interactive Map**: Leaflet-based map is loaded dynamically using `next/dynamic` to prevent SSR issues, and when mouse is over of trip point, it shows preview image..
+- **Interactive Map**: Leaflet-based map is loaded dynamically, and when mouse is over of trip point, it shows preview image.
 - **Timeline**: Trips are visualized from oldest to newest, with detailed modals for viewing, adding, and editing.
 - **UI Framework**: Tailwind CSS is used for all styling, providing a clean and fast development experience.
-- **State Management**: Lightweight use of React’s built-in `useState`, `useEffect`, and `useCallback`.
+- **State Management**: Lightweight use of React’s built-in `useState`, `useEffect`.
 - **Media Uploads**: Supports upload from device photo uploads per trip, integrated with the backend's Supabase S3.
 - **Error Handling**: Toaster-based feedback system using custom hook `useToast`.
 - **Sharing Trips**: Created unique web interface for showing data of the someone's user without any additional buttons.
@@ -53,7 +53,7 @@ npm run dev
 - Used my planning scheme, planning every hour and day of what I need to do.
 - The map is the central interaction point, tightly integrated with a collapsible sidebar for trip history and management.
 - Client-side rendered modals are tailored to maintain UX continuity without page reloads.
-- Leaflet map events directly trigger modal logic and coordinate capture, simulating a native app experience.
+- Leaflet map events directly trigger modal logic and coordinate capture.
 
 ---
 
@@ -61,7 +61,6 @@ npm run dev
 
 - Used only native `fetch` instead of fully switching to Axios for consistency and fewer dependencies.
 - Skipped server-side rendering for map components to avoid Leaflet hydration issues.
-- Kept local-only state for modals and visibility toggle, without external global state.
 
 ---
 
